@@ -12,6 +12,9 @@ dotenv.config();
 connectDB();
 
 const app = express();
+app.get("/", (req, res) => {
+  res.send("🟢 GKCM API is running");
+});
 
 // ✅ Allowed origins
 const allowedOrigins = [
