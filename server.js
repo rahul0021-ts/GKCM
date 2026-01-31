@@ -15,7 +15,15 @@ connectDB();//Calls the MongoDB connection function.
 const app = express();//Initializes an Express app.
 
 // Middleware
-app.use(cors());//Enables CORS so frontend apps can call your backend.
+//app.use(cors());//Enables CORS so frontend apps can call your backend.
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://curious-twilight-df53a6.netlify.app"
+  ],
+  credentials: true
+}));
+
 app.use(express.json());//Middleware to parse incoming JSON requests (req.body).
 
 // Routes
