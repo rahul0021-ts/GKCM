@@ -1,43 +1,45 @@
-//import express from "express";//Imports Express to create the server and routes.
 import dotenv from "dotenv";
-import express from "express";//mports dotenv to load environment variables from .env file.
-import cors from "cors";//Imports CORS middleware.Allows your frontend (React, for example) to make requests to this backend from a different origin.
+import express from "express";
+import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
-import errorHandler, { notFound } from "./middleware/errorMiddleware.js"; // Imports custom error handling middleware:
+import errorHandler, { notFound } from "./middleware/errorMiddleware.js";
 
-dotenv.config();//Loads environment variables from .env into process.env.
+dotenv.config();
 
-// Connect to MongoDB
-connectDB();//Calls the MongoDB connection function.
+// Connect DB
+connectDB();
 
-const app = express();//Initializes an Express app.
+const app = express();
 
-// Middleware
-//app.use(cors());//Enables CORS so frontend apps can call your backend.
-app.use(cors({
+// ✅ CORS
+const corsOptions = {
   origin: [
     "http://localhost:3000",
     "https://curious-twilight-df53a6.netlify.app"
   ],
   credentials: true
-}));
+};
 
-app.use(express.json());//Middleware to parse incoming JSON requests (req.body).
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // 🔥 REQUIRED
+
+// Body parser
+app.use(express.json());
 
 // Routes
-app.use("/api/auth", authRoutes);///api/auth/register and /api/auth/login
-app.use("/api/products", productRoutes);///api/products/ → GET, POST, PUT, DELETE
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
-// 404 handler (should be after all routes)
+// 404
 app.use(notFound);
 
-// Global error handler (should be last)
-app.use(errorHandler);//Catches all errors thrown in controllers or middleware
+// Error handler
+app.use(errorHandler);
 
-// Start server
+// Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>//Starts the server
+app.listen(PORT, () =>
   console.log(`Server running on port ${PORT}`)
 );
