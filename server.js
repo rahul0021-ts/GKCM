@@ -17,7 +17,7 @@ const app = express();
 const corsOptions = {
   origin: [
     "http://localhost:3000",
-    "https://curious-twilight-df53a6.netlify.app"
+    "https://spectacular-longma-a59748.netlify.app"
   ],
   credentials: true
 };
