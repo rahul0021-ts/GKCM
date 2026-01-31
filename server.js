@@ -14,25 +14,19 @@ connectDB();
 const app = express();
 
 // ✅ Allowed origins
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://spectacular-longma-a59748.netlify.app",
-];
+// const allowedOrigins = [
+//   "http://localhost:3000",
+//   "https://spectacular-longma-a59748.netlify.app",
+// ];
 
 // ✅ CORS (NO wildcard, safe with credentials)
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // Postman / curl
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS not allowed"));
-      }
-    },
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: "https://spectacular-longma-a59748.netlify.app",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 
 // ✅ Preflight support
 app.options("*", cors());
