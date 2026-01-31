@@ -14,7 +14,7 @@ const app = express();
 // ✅ CORS - allow both local dev and deployed frontend
 const allowedOrigins = [
   "http://localhost:5173",                  // local frontend
-  "https://your-netlify-site.netlify.app"  // Netlify frontend URL
+  "https://monumental-paprenjak-e31ab9.netlify.app"  // Netlify frontend URL
 ];
 
 app.use(cors({
