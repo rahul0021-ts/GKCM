@@ -11,27 +11,11 @@ connectDB();
 
 const app = express();
 
-// ✅ CORS - allow both localhost and Netlify frontend
-const allowedOrigins = [
-  "http://localhost:5173",                  // local frontend
-  "https://monumental-paprenjak-e31ab9.netlify.app"  // Netlify frontend
-];
-
+// ✅ CORS - allow requests from any origin
 app.use(cors({
-  origin: (origin, callback) => {
-    // allow requests with no origin (Postman, mobile apps)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: "*", // allow all domains
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,       // if you want to allow cookies
-  preflightContinue: false // handle OPTIONS preflight automatically
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 // Handle OPTIONS preflight for all routes
